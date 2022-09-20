@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CharacterHp } from './models/character-hp.model';
 import { Character } from './models/character.model';
+import { Player } from './models/player.model';
+import { Product } from './models/product.model';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,7 @@ export class AppComponent {
   name : string = 'Mauricio';
 
   constructor(){
-    this.otherFunctions();
+    this.argumentDestructuring();
   }
 
   firstExample(){
@@ -211,6 +213,69 @@ export class AppComponent {
     character.showHp();
     this.healthCharacter(character);
     character.showHp();
+  }
+
+  basicDestructuring(){
+    const CURRENT_SONG : Player = {
+      volume : 90,
+      second : 36,
+      name : 'La Cucaracha',
+      detail : {
+        author : 'Fernán Caballero',
+        year : 1818
+      }
+    }
+
+    let author : string = 'Juan Gómez';
+
+    const {volume, second, name : SONG_NAME, detail } = CURRENT_SONG;
+    const { author : detailAuthor } = detail;
+
+    console.log('El volumen es de: ', volume);
+    console.log('El segundo actual es: ', second);
+    console.log('La canción es: ', SONG_NAME);
+    console.log('El autor es: ', detailAuthor);
+  }
+
+  arrayDestructuring(){
+    const AVENGERS : string[] = ['Capitán América', 'Iron Man', 'Viuda Negra', 'Thor', 'Hulk'];
+    const [ p1, p2, p3, p4, p5 ] = AVENGERS;
+
+    console.log('El primer avenger es: ' + p1);
+    console.log('El segundo avenger es: ' + p2);
+    console.log('El tercer avenger es: ' + p3);
+    console.log('El cuarto avenger es: ' + p4);
+    console.log('El quinto avenger es: ' + p5);
+  }
+
+  argumentDestructuring(){
+    const phone : Product = {
+      description : 'iPhone 14 Pro Max',
+      price : 59999
+    }
+
+    const tablet : Product = {
+      description : 'Galaxy Tab S8 Ultra',
+      price : 24999
+    }
+
+    function calcTaxes(products : Product[]): [number, number]{
+      let total = 0;
+
+      products.forEach(product => {
+        total += product.price
+      })
+
+      return [total, total * 1.16];
+    }
+
+    const CAR_ITEMS : Product[] = [phone, tablet];
+    console.table(CAR_ITEMS);
+
+    const [cartPrice, carTaxes] = calcTaxes(CAR_ITEMS);
+    console.log('Total: ' + cartPrice);
+    console.log('Total más impuestos: ' + carTaxes);
+
   }
 
 }
